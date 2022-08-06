@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import Grid, { Rows } from '../models/Grid'
 import Players from '../models/Players';
 import Score from '../models/Score';
 import { RootState } from '../store'
@@ -12,6 +13,8 @@ export interface InitialGameState {
   gameMode: GameMode,
   score: Score,
   currentPlayer: Players
+  grid: Grid
+  gridSize: number
 }
 
 const initialState: InitialGameState = {
@@ -21,12 +24,26 @@ const initialState: InitialGameState = {
     [Players.O]: 0
   },
   currentPlayer: Players.X,
+  gridSize: 3,
+  grid: {} as Grid,
 }
 
 export const gameSlice = createSlice({
   name: "game",
   initialState,
   reducers: {
+    setGrid: (state, action: PayloadAction<Grid>) => {
+      return {
+        ...state,
+        grid: action.payload
+      };
+    },
+    setGridSize: (state, action: PayloadAction<number>) => {
+      return {
+        ...state,
+        gridSize: action.payload
+      };
+    },
     setGameMode: (state, action: PayloadAction<GameMode>) => {
       return {
         ...state,
@@ -55,9 +72,11 @@ export const gameSlice = createSlice({
 
 
 export const selectGameMode = (state: RootState): GameMode => state.game.gameMode
+export const selectGrid = (state: RootState): Grid => state.game.grid
+export const selectGridSize = (state: RootState): number => state.game.gridSize
 export const selectScore = (state: RootState): Score => state.game.score
 export const selectCurrentPlayer = (state: RootState): Players => state.game.currentPlayer
 
-export const { setGameMode, setScore, setCurrentPlayer } = gameSlice.actions
+export const { setGameMode, setGrid, setGridSize, setScore, setCurrentPlayer } = gameSlice.actions
 
 export default gameSlice.reducer
