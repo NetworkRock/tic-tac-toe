@@ -3,6 +3,7 @@ import { View } from "react-native";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import GameArea from "../components/Main/GameArea";
+import GameState from "../components/Main/GameState";
 
 const GameScreen = () => (
   <View
@@ -14,6 +15,7 @@ const GameScreen = () => (
     }}
   >
     <Header />
+    <GameState />
     <GameArea />
     <Footer />
   </View>

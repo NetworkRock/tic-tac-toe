@@ -1,6 +1,13 @@
 import React from "react";
 import { StyleSheet, View, TouchableHighlight } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import Cross from "./GameShapes/Cross";
+import {
+  selectCurrentPlayer,
+  setCurrentPlayer,
+  setScore,
+} from "../../features/gameSlice";
+import Players from '../../models/Players';
 
 interface GameFieldProps {
   id: number;
@@ -8,9 +15,14 @@ interface GameFieldProps {
 }
 
 const GameField = ({ id, rowId }: GameFieldProps) => {
+  const dispatch = useDispatch();
+  const currentPlayer: Players = useSelector(selectCurrentPlayer);
 
   const move = () => {
-    console.log('MOVE', id, rowId);
+      dispatch(
+        setCurrentPlayer(currentPlayer === Players.X ? Players.O : Players.X)
+      );
+      dispatch(setScore(currentPlayer))
   };
 
   return (
