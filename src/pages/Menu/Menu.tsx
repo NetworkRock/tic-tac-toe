@@ -8,8 +8,20 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  GameMode,
+  selectGridSize,
+  setGameMode,
+  setGrid,
+  setGridSize,
+} from "../../features/gameSlice";
+import Grid from "../../models/Grid";
 
 const MenuScreen = ({ navigation }: any) => {
+  const dispatch = useDispatch();
+  const gridSize: number = useSelector(selectGridSize);
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -17,7 +29,12 @@ const MenuScreen = ({ navigation }: any) => {
         <TextInput
           style={styles.textInput}
           onChangeText={(text: string) => {
-            console.log(text)
+            if (Number(text)) {
+              const customGridSize = Number(text);
+              dispatch(setGridSize(customGridSize));
+            } else {
+              dispatch(setGridSize(3));
+            }
           }}
           keyboardType="numeric"
           maxLength={1}
@@ -29,8 +46,11 @@ const MenuScreen = ({ navigation }: any) => {
           <TouchableOpacity
             style={styles.modeButton}
             onPress={() => {
+              dispatch(setGrid(new Grid(gridSize, gridSize)));
+              dispatch(setGameMode(GameMode.MULTI));
               navigation.navigate("Game");
             }}
+            disabled={gridSize === 0}
           >
             <Text style={styles.modeButtonText}>MULTIPLAYER</Text>
           </TouchableOpacity>
