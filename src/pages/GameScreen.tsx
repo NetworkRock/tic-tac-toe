@@ -1,5 +1,8 @@
 import React from "react";
-import { View, Text} from "react-native";
+import { View } from "react-native";
+import Footer from "../components/Footer/Footer";
+import Header from "../components/Header/Header";
+import GameArea from "../components/Main/GameArea";
 
 const GameScreen = () => (
   <View
@@ -10,7 +13,9 @@ const GameScreen = () => (
       backgroundColor: "#e3e1e5",
     }}
   >
-    <Text>Game Screen</Text>
+    <Header />
+    <GameArea />
+    <Footer />
   </View>
 );
 
